@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import create from "./../../utils/create"
-import button from "../../components/buttons/Button.vue"
 import LeftSide from "./../../components/LeftSide.vue"
 import draggable from "vuedraggable";
 
@@ -25,6 +24,7 @@ const data: DataItem[] = [
   },
 ];
 const list=ref([]);
+const checkConf = ref({});
 function addbtn(item) {
     create(button,{title: item.title});
 }
@@ -38,6 +38,9 @@ const chooseDrggC = ref(false);
       <left-side></left-side>
     </div>
     <div class="content">
+      <component
+          :is="LenovoButton"
+      ></component>
         <draggable
             class="zone"
             :list="list"
@@ -46,8 +49,8 @@ const chooseDrggC = ref(false);
             :disabled="false" 
         >
             <template #item="{element}">
-              <div class="drag-div" :class="{actived:chooseDrggC}" @click="chooseDrggC=!chooseDrggC" v-if="element.comp_name == 'Layouts'">
-                  <layouts   :itemInfo="element"></layouts>
+              <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="checkConf[element.idd]=!checkConf[element.idd]" v-if="element.comp_name == 'Layouts'">
+                  <layouts :itemInfo="element"></layouts>
               </div>
             </template>
         </draggable>

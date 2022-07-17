@@ -7,9 +7,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AAvatar: typeof import('ant-design-vue/es')['Avatar']
     ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb']
     ABreadcrumbItem: typeof import('ant-design-vue/es')['BreadcrumbItem']
+    Abutton: typeof import('./src/components/buttons/Abutton.vue')['default']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACol: typeof import('ant-design-vue/es')['Col']
     ACollapse: typeof import('ant-design-vue/es')['Collapse']
@@ -17,17 +17,14 @@ declare module '@vue/runtime-core' {
     ALayout: typeof import('ant-design-vue/es')['Layout']
     ALayoutContent: typeof import('ant-design-vue/es')['LayoutContent']
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
-    AList: typeof import('ant-design-vue/es')['List']
-    AListItem: typeof import('ant-design-vue/es')['ListItem']
-    AListItemMeta: typeof import('ant-design-vue/es')['ListItemMeta']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     ARow: typeof import('ant-design-vue/es')['Row']
     Button: typeof import('./src/components/buttons/Button.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    Layout: typeof import('./src/components/layouts/layout.vue')['default']
+    LAbutton: typeof import('./src/components/buttons/LAbutton.vue')['default']
     Layouts: typeof import('./src/components/layouts/Layouts.vue')['default']
     LeftSide: typeof import('./src/components/LeftSide.vue')['default']
+    LenovoButton: typeof import('./src/components/buttons/LenovoButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

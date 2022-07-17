@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
-import Button from "@/components/buttons/Button.vue"
 import { reactive, ref } from 'vue';
+import LenovoButton from "@/components/buttons/LenovoButton.vue"
     defineProps({
         itemInfo: {}
     })
@@ -23,21 +23,25 @@ import { reactive, ref } from 'vue';
     [1, 2, 3, 4, 6, 8, 12].forEach((value, i) => {
       state.colCounts[i-1] = value;
     });
+    const conf_c = ref({
+      LenovoButton: LenovoButton
+    })
 </script>
 
 <template>
-    <a-row :gutter="[state.gutters[itemInfo.confs['gutterKey']], state.vgutters[itemInfo.confs['vgutterKey']]]">
+    <a-row :gutter="[state.gutters[0], state.vgutters[0]]">
       
       <a-col
-        v-for="item in itemInfo.confs['colCountKey']"
-        :key="item.toString()"
-        :span="24 / itemInfo.confs['colCountKey']"
+        v-for="col in itemInfo.cols"
+        :key="col.idd"
+        :span="col.span"
       >
-        <draggable :list="itemInfo.comps" group="components" class="colDraggable">
+        <draggable :list="col.comps" group="comp" item-key="idd" class="colDraggable">
             <template #item="{element}">
                 <component
                     :key="element.idd"
-                    :is="element.comp_name"
+                    :is="conf_c[element.comp_name]"
+                    :confs="element.comp_confs"
                 ></component>
             </template>
         </draggable>
@@ -54,6 +58,10 @@ import { reactive, ref } from 'vue';
         border-right: 1px dashed rgb(192, 190, 190);
         &:last-child {
             border-right: none;
+        }
+        .colDraggable {
+          height: 100%;
+          width: 100%;
         }
     }
 }
