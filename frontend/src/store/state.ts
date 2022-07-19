@@ -1,13 +1,4 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import draggable from "vuedraggable";
-defineProps({
-    title: {
-        default: ''
-    }
-})
-const activeKey = ref(['layout']);
-const comps = ref([
+let comps_sum = [
     {
         idd: 'layout', title: 'Layouts', type:'layout', children: [
             {idd: '1_col',title: '1 Cols', type:'layout',comp_name: 'Layouts',
@@ -45,54 +36,9 @@ const comps = ref([
             {idd: 'basic_2',title: 'Select', type:'select', comp_name: 'Select'}
         ]
     }
-]);
-let i =0;
-function cloneCompoents (cloneObj) {
-    let newObj = JSON.parse(JSON.stringify(cloneObj));
-    newObj.idd = 'test' + i++;
-    return newObj;
+];
+export default {
+    comps_sum,
+    list: [] as any,
+    compType: 'layout'
 }
-</script>
-
-<template>
-  <a-collapse v-model:activeKey="activeKey" accordion>
-    <a-collapse-panel :key="comp.idd" v-for="comp of comps" :header="comp.title">
-        <draggable
-            class="comps"
-            :list="comp.children"
-            item-key="idd"
-            :options="{sort: false}"
-            :clone="cloneCompoents"
-            :group="{ name: 'comp', pull: 'clone',  put: false}"
-        >
-            <template #item="{element}">
-                <p class="c_item" >
-                    {{ element.title }}
-                </p>
-            </template>
-        </draggable>
-    </a-collapse-panel>
-  </a-collapse>
-</template>
-
-<style lang="less" scoped>
-    :deep .ant-collapse-content > .ant-collapse-content-box {
-        padding: 3px 16px;
-    }
-    .comps {
-        display: flex;
-        justify-content:start;
-        flex-wrap: wrap;
-        .c_item {
-            width: 30%;
-            padding: 5px;
-            cursor: pointer;
-            border-radius: 2px;
-            &:hover, &:active,&:focus {
-                background: rgb(243, 238, 238);
-                cursor: move;
-            }
-        }
-        
-    }
-</style>

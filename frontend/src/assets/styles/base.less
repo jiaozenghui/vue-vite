@@ -1,5 +1,14 @@
 @antPromaryCorlor:#1890ff;
+@fontColor: #989A9C;
+@fontSize: 12px;
+body {
+    color: @fontColor;
+    font-size: @fontSize;
+}
 :deep(.ant-layout)  {
+    user-select: none;
+}
+:deep(.ant-tabs-top) {
     user-select: none;
 }
 p {
@@ -9,3 +18,21 @@ p {
 .ant-layout {
     user-select: none;
 }
+.ant-tabs {
+    color: @fontColor;
+    font-size: @fontSize;
+}
+
+.zone {
+    background: #fff;
+    height: 100%;
+    position: relative;
+    .drag-div {
+      &:hover {
+        border: 1px dashed @antPromaryCorlor;
+      }
+      &:focus, &:active, &.actived {
+        border: 1px solid @antPromaryCorlor;
+      }
+    }
+  }

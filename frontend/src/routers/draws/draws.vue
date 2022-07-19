@@ -9,38 +9,20 @@ import Layouts from "@/components/layouts/Layouts.vue"
 interface DataItem {
   title: string;
 }
-const data: DataItem[] = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
 const list=ref([]);
-const checkConf = ref({});
+const checkConf = ref({}) as any;
 function addbtn(item) {
     create(button,{title: item.title});
 }
 const chooseDrggC = ref(false);
-
+function checkConfFn ($event:any, idd:any) {
+  checkConf.value[idd]=ref(!checkConf.value[idd])
+}
 </script>
 
 <template>
   <div class="main-content">
-    <div class="left-side">
-      <left-side></left-side>
-    </div>
     <div class="content">
-      <component
-          :is="LenovoButton"
-      ></component>
         <draggable
             class="zone"
             :list="list"
@@ -49,12 +31,12 @@ const chooseDrggC = ref(false);
             :disabled="false" 
         >
             <template #item="{element}">
-              <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="checkConf[element.idd]=!checkConf[element.idd]" v-if="element.comp_name == 'Layouts'">
+              <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element.idd)" v-if="element.comp_name == 'Layouts'">
                   <layouts :itemInfo="element"></layouts>
               </div>
             </template>
         </draggable>
-            <p class="emptyInfo">Please drag one layout first</p>
+            <p class="emptyInfo" v-if="list.length <=0">Please drag one layout first in here</p>
     </div>
     <div class="right-side"></div>
   </div>
@@ -68,30 +50,18 @@ const chooseDrggC = ref(false);
     }
     .content {
         flex: 1 1 auto;
-        padding: 10px;
+        border: 2px dashed #eee;
         background: rgb(215, 216, 214);
-        height: calc(100vh - 118px);
-        .zone {
-          background: #fff;
-          height: 100%;
-          position: relative;
-          .emptyInfo {
-              position: absolute;
-              top: 50%;
-              text-align: center;
-              width: 100%;
-              transform: translateY(-50%);
-              color: #b2aaaa;
-              font-size: 16px;
-          }
-          .drag-div {
-            &:hover {
-              border: 1px dashed @antPromaryCorlor;
-            }
-            &:focus, &:active, &.actived {
-              border: 1px solid @antPromaryCorlor;
-            }
-          }
+        height: calc(100vh - 80px);
+        box-sizing: border-box;
+        .emptyInfo {
+            position: absolute;
+            top: 50%;
+            text-align: center;
+            width: calc(100% - 4px);
+            transform: translateY(-50%);
+            color: #b2aaaa;
+            font-size: 16px;
         }
     }
     .right-side {

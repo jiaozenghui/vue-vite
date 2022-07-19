@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { reactive, ref } from 'vue';
-import LenovoButton from "@/components/buttons/LenovoButton.vue"
+import LButton from "@/components/basics/lbuttons/LButton.vue"
     defineProps({
-        itemInfo: {}
+        itemInfo: {} as any
     })
     const state = reactive<{
       gutters: { [key: number]: number };
@@ -23,9 +23,16 @@ import LenovoButton from "@/components/buttons/LenovoButton.vue"
     [1, 2, 3, 4, 6, 8, 12].forEach((value, i) => {
       state.colCounts[i-1] = value;
     });
-    const conf_c = ref({
-      LenovoButton: LenovoButton
+    const conf_c:any = ref({
+      LButton: LButton
     })
+    let checkConf = ref({}) as any;
+    function layClick(e:any, idd:any) {
+      checkConf.value[idd]=ref(!checkConf.value[idd]);
+      e = e|| window.event;
+      e.stopPropagation();
+      
+    }
 </script>
 
 <template>
@@ -38,7 +45,11 @@ import LenovoButton from "@/components/buttons/LenovoButton.vue"
       >
         <draggable :list="col.comps" group="comp" item-key="idd" class="colDraggable">
             <template #item="{element}">
+              <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="layClick($event,element.idd)" v-if="element.comp_name == 'Layouts'">
+                  <layouts :itemInfo="element"></layouts>
+              </div>
                 <component
+                    v-else
                     :key="element.idd"
                     :is="conf_c[element.comp_name]"
                     :confs="element.comp_confs"
