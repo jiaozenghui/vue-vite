@@ -27,8 +27,7 @@ function checkConfFn ($event:any, idd:any) {
             class="zone"
             :list="list"
             item-key="idd"
-            :group="{ name: 'comp', pull: '' }"
-            :disabled="false" 
+            group="comp"
         >
             <template #item="{element}">
               <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element.idd)" v-if="element.comp_name == 'Layouts'">
