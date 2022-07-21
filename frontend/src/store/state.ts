@@ -40,5 +40,8 @@ let comps_sum = [
 export default {
     comps_sum,
     list: [] as any,
-    compType: 'layout'
+    compType: 'layout',
+    drawer_conf: {
+        visible: false
+    } as any
 }

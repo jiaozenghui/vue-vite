@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import create from "./../../utils/create"
-import LeftSide from "./../../components/LeftSide.vue"
 import draggable from "vuedraggable";
 
 import Layouts from "@/components/layouts/Layouts.vue"
@@ -11,11 +9,10 @@ interface DataItem {
 }
 const list=ref([]);
 const checkConf = ref({}) as any;
-function addbtn(item) {
-    create(button,{title: item.title});
-}
+
 const chooseDrggC = ref(false);
-function checkConfFn ($event:any, idd:any) {
+
+function checkConfFn($event:any, idd:any) {
   checkConf.value[idd]=ref(!checkConf.value[idd])
 }
 </script>
@@ -27,7 +24,8 @@ function checkConfFn ($event:any, idd:any) {
             class="zone"
             :list="list"
             item-key="idd"
-            group="comp"
+            :group="{ name: 'comp', pull: '' }"
+            :disabled="false" 
         >
             <template #item="{element}">
               <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element.idd)" v-if="element.comp_name == 'Layouts'">

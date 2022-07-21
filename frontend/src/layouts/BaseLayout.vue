@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import BaseHeader from "./BaseHeader.vue"
+import { ref } from 'vue';
+
+
 </script>
 
 <template>
@@ -8,7 +11,7 @@ import BaseHeader from "./BaseHeader.vue"
       <a-layout-content
         :style="{ background: '#fff', margin: 0, minHeight: '280px' }"
       >
-        <router-view></router-view>
+        <router-view ></router-view>
       </a-layout-content>
     </a-layout>
 </template>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import { reactive, ref } from 'vue';
+import { useStore } from "vuex";
 import LButton from "@/components/basics/lbuttons/LButton.vue"
     defineProps({
         itemInfo: {} as any
-    })
+    });
+    const store = useStore();
     const state = reactive<{
       gutters: { [key: number]: number };
       colCounts: { [key: number]: number };
@@ -29,6 +31,9 @@ import LButton from "@/components/basics/lbuttons/LButton.vue"
     let checkConf = ref({}) as any;
     function layClick(e:any, idd:any) {
       checkConf.value[idd]=ref(!checkConf.value[idd]);
+      store.commit('changeDrawConf', {
+        visible: true
+      })
       e = e|| window.event;
       e.stopPropagation();
       

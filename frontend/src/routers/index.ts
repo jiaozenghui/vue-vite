@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BaseLayout from './../layouts/BaseLayout.vue'
-import HelloWorld from './../components/HelloWorld.vue'
 import draw from './draws/draws.vue'
 
 export const router = createRouter({
