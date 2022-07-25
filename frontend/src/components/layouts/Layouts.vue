@@ -2,7 +2,11 @@
 import draggable from "vuedraggable";
 import { reactive, ref } from 'vue';
 import { useStore } from "vuex";
-import LButton from "@/components/basics/lbuttons/LButton.vue"
+import LButton from "@/components/basics/lbuttons/LButton.vue";
+import {getCurrentInstance, ComponentInternalInstance } from 'vue';
+ 
+let { ctx } = getCurrentInstance();
+const { proxy }: any = getCurrentInstance();
     defineProps({
         itemInfo: {} as any
     });
@@ -33,7 +37,10 @@ import LButton from "@/components/basics/lbuttons/LButton.vue"
       checkConf.value[idd]=ref(!checkConf.value[idd]);
       store.commit('changeDrawConf', {
         visible: true
-      })
+      });
+      proxy.$ldrawer({confs: {
+        visible:true
+      }})
       e = e|| window.event;
       e.stopPropagation();
       
