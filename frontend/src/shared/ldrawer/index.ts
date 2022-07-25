@@ -1,15 +1,26 @@
-import { createVNode, render } from 'vue';
-import type {App} from "vue";
+import { createVNode, render,createApp} from 'vue';
 import LDrawer from './LDrawer.vue'
-const LDrawers: any= function(options:any){
-    const container = document.createElement('div');
-    container.setAttribute('class', 'drawer-container')
+
+let container:any;
+let createNode = (options:any) => {
+	if(container){
+		document.body.removeChild(container)
+    	container = null
+	}
+    container = document.createElement('div');
+    container.setAttribute('class', 'drawer-container');
     const vm = createVNode(
         LDrawer,
         options,
     )
     render(vm, container)
     document.body.appendChild(container);
+}
+
+const LDrawers: any= function(options:any){
+    options.id = options.id || 'l-drawers' + 1;
+    let $inst = createNode(options)
+    return $inst
 }  
 LDrawers.install = (app:any)=>{
     app.component('l-drawers', LDrawers)

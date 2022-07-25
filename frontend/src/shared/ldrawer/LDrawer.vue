@@ -15,8 +15,15 @@ defineProps({
 </transition>
 </template>
 
-<style lang="less" scoped>
-
+<style lang="less">
+  :deep(.drawer-container) {
+  position: fixed;
+  width: 260px;
+  height: 100%;
+  background: rgb(143, 234, 140);
+  right: 0;
+  top: 0;
+}
 .slide-fade-enter-active {
   transition: all .3s ease-out;
 }
