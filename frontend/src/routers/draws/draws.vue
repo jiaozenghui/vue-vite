@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import draggable from "vuedraggable";
 
 import Layouts from "@/components/layouts/Layouts.vue"
+import {getCurrentInstance } from 'vue';
+ const { proxy }: any = getCurrentInstance();
 
 interface DataItem {
   title: string;
@@ -12,13 +14,17 @@ const checkConf = ref({}) as any;
 
 const chooseDrggC = ref(false);
 
-function checkConfFn($event:any, idd:any) {
-  checkConf.value[idd]=ref(!checkConf.value[idd])
+function checkConfFn($event:any, element:any) {
+  checkConf.value[element.idd]=ref(!checkConf.value[element.idd]);
+  proxy.$ldrawer({confs: {
+    visible:true,
+    element: element
+  }})
 }
 </script>
 
 <template>
-  <div class="main-content">
+  <div class="main-content" id="main-content">
     <div class="content">
         <draggable
             class="zone"
@@ -28,14 +34,14 @@ function checkConfFn($event:any, idd:any) {
             :disabled="false" 
         >
             <template #item="{element}">
-              <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element.idd)" v-if="element.comp_name == 'Layouts'">
+              <div class="drag-div"  :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element)" v-if="element.comp_name == 'Layouts'">
                   <layouts :itemInfo="element"></layouts>
               </div>
             </template>
         </draggable>
             <p class="emptyInfo" v-if="list.length <=0">Please drag one layout first in here</p>
     </div>
-    <div class="right-side"></div>
+    <div id="set-container" class="right-side"></div>
   </div>
 </template>
 

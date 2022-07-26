@@ -1,28 +1,30 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import draggable from "vuedraggable";
+import LayoutsSetting from '@/components/layouts/LayoutsSetting.vue'
 defineProps({
     confs: {} as any
 })
-
+const conf_c:any = ref({
+  Layouts: LayoutsSetting
+})
 </script>
 
 <template>
 <transition name="slide-fade">
-    <div  class="setting-container">
-
+    <div class="setting-container" v-if="confs.visible"  >
+      <component
+          :key="confs.idd"
+          :is="conf_c[confs.element.comp_name]"
+          :styleItems="confs.element.styles"
+      ></component>
     </div>
 </transition>
 </template>
 
 <style lang="less">
-  :deep(.drawer-container) {
-  position: fixed;
-  width: 260px;
-  height: 100%;
-  background: rgb(143, 234, 140);
-  right: 0;
-  top: 0;
+ .setting-container {
+  padding:20px
 }
 .slide-fade-enter-active {
   transition: all .3s ease-out;

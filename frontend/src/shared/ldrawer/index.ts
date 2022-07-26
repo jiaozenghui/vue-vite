@@ -1,20 +1,13 @@
 import { createVNode, render,createApp} from 'vue';
 import LDrawer from './LDrawer.vue'
 
-let container:any;
 let createNode = (options:any) => {
-	if(container){
-		document.body.removeChild(container)
-    	container = null
-	}
-    container = document.createElement('div');
-    container.setAttribute('class', 'drawer-container');
     const vm = createVNode(
         LDrawer,
         options,
     )
-    render(vm, container)
-    document.body.appendChild(container);
+    render(vm, document.getElementById('set-container')as any)
+    //document.body.appendChild(container);
 }
 
 const LDrawers: any= function(options:any){

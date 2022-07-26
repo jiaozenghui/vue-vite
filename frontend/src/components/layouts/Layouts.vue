@@ -5,7 +5,6 @@ import { useStore } from "vuex";
 import LButton from "@/components/basics/lbuttons/LButton.vue";
 import {getCurrentInstance, ComponentInternalInstance } from 'vue';
  
-let { ctx } = getCurrentInstance();
 const { proxy }: any = getCurrentInstance();
     defineProps({
         itemInfo: {} as any
@@ -48,14 +47,14 @@ const { proxy }: any = getCurrentInstance();
 </script>
 
 <template>
-    <a-row :gutter="[state.gutters[0], state.vgutters[0]]">
+    <a-row :style="itemInfo.styles" :gutter="[state.gutters[0], state.vgutters[0]]">
       
       <a-col
         v-for="col in itemInfo.cols"
         :key="col.idd"
         :span="col.span"
       >
-        <draggable :list="col.comps" :disabled="false"  group="comp" item-key="idd" class="colDraggable">
+        <draggable :list="col.comps" :disabled="false"  group="comp" item-key="idd"  class="colDraggable">
             <template #item="{element}">
               <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="layClick($event,element.idd)" v-if="element.comp_name == 'Layouts'">
                   <layouts :itemInfo="element"></layouts>

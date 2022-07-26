@@ -1,7 +1,15 @@
 let comps_sum = [
     {
         idd: 'layout', title: 'Layouts', type:'layout', children: [
-            {idd: '1_col',title: '1 Cols', type:'layout',comp_name: 'Layouts',
+            {idd: '1_col',title: '1 Cols', type:'layout',
+            styles:{
+                height: '60px',
+                'min-height': '60px',
+                'margin-left': 0,
+                'margin-right': 0,
+                'background-color': 'transparent'
+            },
+            comp_name: 'Layouts',
                 confs: {gutterKey: 0, vgutterKey:0, colCountKey:1},
                 cols:[
                     {idd: '1_col_1',title: '2 Cols', type:'col', span: 24, comps:[]}
