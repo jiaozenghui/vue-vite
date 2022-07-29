@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { reactive, toRaw } from 'vue';
 import type { UnwrapRef } from 'vue';
-
+import ColorPicker from "vue3-colorpicker";
+import "vue3-colorpicker/style.css";
     defineProps({
         styleItems: {
             height: '60px',
@@ -33,7 +34,7 @@ import type { UnwrapRef } from 'vue';
       <a-input v-model:value="styleItems['margin-right']" />
     </a-form-item>
     <a-form-item label="背景色">
-      <a-input v-model:value="styleItems['background-color']" />
+      <color-picker v-model:value="styleItems['background-color']"/>
     </a-form-item>
     <a-form-item label="水平对齐">
       <a-input v-model:value="colStyleItems['justify-content']" />
