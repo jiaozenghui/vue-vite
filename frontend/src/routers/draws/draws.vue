@@ -34,7 +34,7 @@ function checkConfFn($event:any, element:any) {
             :disabled="false" 
         >
             <template #item="{element}">
-              <div class="drag-div"  :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element)" v-if="element.comp_name == 'Layouts'">
+              <div class="drag-div" :style="element.styles"  :class="{actived:checkConf[element.idd]}" @click="checkConfFn($event, element)" v-if="element.comp_name == 'Layouts'">
                   <layouts :itemInfo="element"></layouts>
               </div>
             </template>

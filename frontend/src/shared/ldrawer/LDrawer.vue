@@ -17,6 +17,7 @@ const conf_c:any = ref({
           :key="confs.idd"
           :is="conf_c[confs.element.comp_name]"
           :styleItems="confs.element.styles"
+          :colStyleItems="confs.element.col_styles"
       ></component>
     </div>
 </transition>

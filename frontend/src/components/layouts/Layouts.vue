@@ -47,14 +47,14 @@ const { proxy }: any = getCurrentInstance();
 </script>
 
 <template>
-    <a-row :style="itemInfo.styles" :gutter="[state.gutters[0], state.vgutters[0]]">
+    <a-row  :gutter="[state.gutters[0], state.vgutters[0]]">
       
       <a-col
         v-for="col in itemInfo.cols"
         :key="col.idd"
         :span="col.span"
       >
-        <draggable :list="col.comps" :disabled="false"  group="comp" item-key="idd"  class="colDraggable">
+        <draggable :list="col.comps" :disabled="false"  group="comp" item-key="idd" :style="itemInfo.col_styles"  class="colDraggable">
             <template #item="{element}">
               <div class="drag-div" :class="{actived:checkConf[element.idd]}" @click="layClick($event,element.idd)" v-if="element.comp_name == 'Layouts'">
                   <layouts :itemInfo="element"></layouts>
@@ -74,12 +74,16 @@ const { proxy }: any = getCurrentInstance();
 <style lang="less" scoped>
 .ant-row {
     min-height: 50px;
+    height: 100%;
     border: 1px dashed rgb(192, 190, 190);
     :deep(.ant-col) {
         background: transparent;
         border-right: 1px dashed rgb(192, 190, 190);
         &:last-child {
             border-right: none;
+        }
+        .drag-div {
+          width: 100%;
         }
         .colDraggable {
           height: 100%;

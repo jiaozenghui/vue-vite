@@ -9,6 +9,12 @@ let comps_sum = [
                 'margin-right': 0,
                 'background-color': 'transparent'
             },
+            col_styles: {
+                display: 'flex',
+                'justify-content': 'flex-start',
+                'align-items': 'flex-start',
+                'flex-wrap': 'wrap'
+            },
             comp_name: 'Layouts',
                 confs: {gutterKey: 0, vgutterKey:0, colCountKey:1},
                 cols:[

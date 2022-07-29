@@ -4,7 +4,15 @@ import type { UnwrapRef } from 'vue';
 
     defineProps({
         styleItems: {
-            
+            height: '60px',
+            'margin-left': '0px',
+            'margin-right': '0px',
+            'background-color': 'transparent'
+        } as any,
+        colStyleItems: {
+          display: 'flex',
+          'justify-content': 'flex-start',
+          'align-items': 'flex-start'
         } as any
     })
 
@@ -26,6 +34,12 @@ import type { UnwrapRef } from 'vue';
     </a-form-item>
     <a-form-item label="背景色">
       <a-input v-model:value="styleItems['background-color']" />
+    </a-form-item>
+    <a-form-item label="水平对齐">
+      <a-input v-model:value="colStyleItems['justify-content']" />
+    </a-form-item>
+    <a-form-item label="垂直对齐">
+      <a-input v-model:value="colStyleItems['align-items']" />
     </a-form-item>
   </a-form>
 </template>
