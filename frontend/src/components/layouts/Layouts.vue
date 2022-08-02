@@ -47,7 +47,7 @@ const { proxy }: any = getCurrentInstance();
 </script>
 
 <template>
-    <a-row  :gutter="[state.gutters[0], state.vgutters[0]]">
+    <a-row :style="{'min-height': itemInfo.styles['min-height']}"  :gutter="[state.gutters[0], state.vgutters[0]]">
       
       <a-col
         v-for="col in itemInfo.cols"
@@ -63,7 +63,7 @@ const { proxy }: any = getCurrentInstance();
                     v-else
                     :key="element.idd"
                     :is="conf_c[element.comp_name]"
-                    :confs="element.comp_confs"
+                    :ItemInfo="element"
                 ></component>
             </template>
         </draggable>
@@ -73,7 +73,6 @@ const { proxy }: any = getCurrentInstance();
 
 <style lang="less" scoped>
 .ant-row {
-    min-height: 50px;
     height: 100%;
     border: 1px dashed rgb(192, 190, 190);
     :deep(.ant-col) {

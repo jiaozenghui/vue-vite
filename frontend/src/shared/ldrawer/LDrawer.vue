@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import draggable from "vuedraggable";
-import LayoutsSetting from '@/components/layouts/LayoutsSetting.vue'
+import LayoutsSetting from '@/components/layouts/LayoutsSetting.vue';
+import LButtonSetting from '@/components/basics/lbuttons/LButtonSetting.vue'
+import {ColorPicker} from "vue3-colorpicker";
+import "vue3-colorpicker/style.css";
 defineProps({
     confs: {} as any
 })
-const conf_c:any = ref({
-  Layouts: LayoutsSetting
-})
+const conf_c:any = {
+  Layouts: LayoutsSetting,
+  LButton: LButtonSetting
+}
 </script>
 
 <template>
@@ -18,6 +22,7 @@ const conf_c:any = ref({
           :is="conf_c[confs.element.comp_name]"
           :styleItems="confs.element.styles"
           :colStyleItems="confs.element.col_styles"
+          :element="confs.element"
       ></component>
     </div>
 </transition>
