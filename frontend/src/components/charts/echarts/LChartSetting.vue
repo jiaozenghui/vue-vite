@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { reactive, toRaw } from 'vue';
+import { ref, toRaw } from 'vue';
 import type { UnwrapRef } from 'vue';
 import {ColorPicker} from "vue3-colorpicker";
 import { toRefs } from 'vue'
 import "vue3-colorpicker/style.css";
+import axios from "axios";
     const props = defineProps({
         styleItems: {} as any,
         colStyleItems: {} as any,
@@ -13,6 +14,21 @@ import "vue3-colorpicker/style.css";
     const labelCol= { style: { width: '60px' } };
     const wrapperCol= { span: 14 };
 
+    const loadData = () => {
+      axios.get(props.element.ajaxUrl).then((res:any) => {
+        emits('change', {type: 'data_change', data:res})
+      })
+    }
+    const emits = defineEmits<{
+      (e: 'change', data: any): void
+    }>()
+
+    function exportData() {
+      loadData()
+    }
+    function typeChange(type:any) {
+      emits('change', {type: 'type_change', data: type})
+    }
 </script>
 
 <template>
@@ -23,26 +39,12 @@ import "vue3-colorpicker/style.css";
     <a-form-item label="类型">
         <a-select
             ref="select"
-                v-model:value="element.type" 
-                style="width: 120px"
-            >
-             <a-select-option value="default">default</a-select-option>
-            <a-select-option value="primary">primary</a-select-option>
-            <a-select-option value="dashed">dashed</a-select-option>
-            <a-select-option value="link">link</a-select-option>
-            <a-select-option value="text">text</a-select-option>
-            <a-select-option value="ghost">ghost</a-select-option>
-        </a-select>
-    </a-form-item>
-    <a-form-item label="形状">
-        <a-select
-            ref="select"
-                v-model:value="element.shape" 
-                style="width: 120px"
-            >
-             <a-select-option value="default">default</a-select-option>
-            <a-select-option value="circle">circle</a-select-option>
-            <a-select-option value="round">round</a-select-option>
+            v-model:value="element['chart_type']" 
+            style="width: 120px"
+            @change="typeChange($event)"
+        >
+             <a-select-option value="line">线形图</a-select-option>
+            <a-select-option value="circle">饼图</a-select-option>
         </a-select>
     </a-form-item>
     <a-form-item label="危险">
@@ -83,6 +85,9 @@ import "vue3-colorpicker/style.css";
     </a-form-item>
     <a-form-item label="右边距">
       <a-input v-model:value="styleItems['margin-right']" />
+    </a-form-item>
+    <a-form-item label="数据">
+      <a-input v-model:value="element['ajaxUrl']" />    <a-button @click="exportData()">导入数据</a-button>
     </a-form-item>
   </a-form>
 </template>

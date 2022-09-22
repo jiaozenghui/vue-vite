@@ -4,17 +4,6 @@ const { proxy }: any = getCurrentInstance();
     defineProps({
         ItemInfo: {} as any
     })
-
-    function btnClick(e:any, element:any) {
-
-      proxy.$ldrawer({confs: {
-        visible:true,
-        element: element
-      }})
-      e = e|| window.event;
-      e.stopPropagation();
-      
-    }
 </script>
 
 <template>
@@ -22,7 +11,6 @@ const { proxy }: any = getCurrentInstance();
         :style="ItemInfo.styles"
         :loading="ItemInfo.loading"
         :shape="ItemInfo.shape"
-        @click="btnClick($event, ItemInfo)"
         :type="ItemInfo.type"
         :size="ItemInfo.size"
         :danger="ItemInfo.danger"

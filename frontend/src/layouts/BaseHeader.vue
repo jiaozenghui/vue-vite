@@ -18,6 +18,7 @@ function changeType (type:any) {
         <comp-container></comp-container>
     </a-tab-pane>
   </a-tabs>
+  
 </template>
 
 <style lang="less" scoped>

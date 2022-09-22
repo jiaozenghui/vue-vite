@@ -23,5 +23,10 @@ export default defineConfig({
         additionalData:  `@import "${resolve(__dirname, 'src/assets/styles/base.less')}";`
       }
     }
+  },
+  server:{
+    proxy:{
+      '/api': 'https://api.*.com/'
+    }
   }
 })

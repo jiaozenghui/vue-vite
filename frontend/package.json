@@ -8,7 +8,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.2.10",
+    "axios": "^0.27.2",
+    "echarts": "^5.3.3",
+    "element-resize-detector": "^1.2.4",
     "vue": "^3.2.25",
     "vue-router": "^4.1.1",
     "vue3-colorpicker": "^2.0.4",

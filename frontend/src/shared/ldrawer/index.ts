@@ -7,16 +7,20 @@ let createNode = (options:any) => {
         options,
     )
     render(vm, document.getElementById('set-container')as any)
+    return vm;
     //document.body.appendChild(container);
 }
 
 const LDrawers: any= function(options:any){
     options.id = options.id || 'l-drawers' + 1;
-    let $inst = createNode(options)
+    let $inst = createNode(options) as any;
+    $inst['show']= $inst.component.exposed.show;
+    $inst['hide']= $inst.component.exposed.hide;
     return $inst
-}  
+}
 LDrawers.install = (app:any)=>{
-    app.component('l-drawers', LDrawers)
-    app.config.globalProperties.$ldrawer = LDrawers
+    app.component('l-drawers', LDrawers);
+    app.config.globalProperties.$ldrawer = LDrawers;
+    
 }
 export default LDrawers

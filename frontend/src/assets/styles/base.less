@@ -1,6 +1,7 @@
 @antPromaryCorlor:#1890ff;
 @fontColor: #989A9C;
 @fontSize: 12px;
+
 body {
     color: @fontColor;
     font-size: @fontSize;
@@ -22,9 +23,21 @@ p {
     color: @fontColor;
     font-size: @fontSize;
 }
-
+.main-view {
+  .zone {
+    height: 100%;
+    position: relative;
+    .drag-div {
+      &:hover {
+        border: none;
+      }
+      &:focus, &:active, &.actived {
+        border: none;
+      }
+    }
+  }
+}
 .zone {
-    background: #fff;
     height: 100%;
     position: relative;
     .drag-div {
