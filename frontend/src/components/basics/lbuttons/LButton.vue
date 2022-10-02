@@ -1,11 +1,20 @@
 <script setup lang="ts">
-defineProps({
-    confs: {} as any
-})
+import {getCurrentInstance } from 'vue';
+const { proxy }: any = getCurrentInstance();
+    defineProps({
+        ItemInfo: {} as any
+    })
 </script>
 
 <template>
-<a-button type="primary">{{confs.title}}</a-button>
+    <a-button
+        :style="ItemInfo.styles"
+        :loading="ItemInfo.loading"
+        :shape="ItemInfo.shape"
+        :type="ItemInfo.type"
+        :size="ItemInfo.size"
+        :danger="ItemInfo.danger"
+    >{{ItemInfo.title}}</a-button>
 </template>
 
 <style scoped>
