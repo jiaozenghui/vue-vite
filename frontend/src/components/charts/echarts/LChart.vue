@@ -233,6 +233,181 @@ let option = {
             }]
         }]
     };
+    let bar_option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#57617B'
+                    }
+                }
+            },
+            "legend": {
+
+                "data": [{
+                        "name": "Victory"
+                    },
+                    {
+                        "name": "Defeat"
+                    },
+                    {
+                        "name": "胜率"
+                    }
+                ],
+                "top": "0%",
+                "textStyle": {
+                    "color": "rgba(255,255,255,1)", //图例文字
+                    "fontSize": "16"
+                }
+            },
+
+            "xAxis": [{
+                "type": "category",
+
+                data: ['BLG', 'VG', 'FPX', 'EDG', 'RNG', 'LGD', 'WE', 'SN', 'IG', 'V5', 'JDG', 'TES'],
+                axisLine: {
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)"
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: "rgb(255,255,255)",
+                        fontSize: '16',
+                    },
+                },
+
+            }, ],
+            "yAxis": [{
+                    "type": "value",
+                    "name": "次数",
+                    "min": 0,
+                    "interval": 10,
+                    "axisLabel": {
+                        "show": true,
+
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,1)'
+                        }
+                    }, //左线色
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: "rgba(255,255,255,0.5)"
+                        }
+                    }, //x轴线
+                },
+                {
+                    "type": "value",
+                    "name": "胜率",
+                    "show": true,
+                    "axisLabel": {
+                        "show": true,
+
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,1 )'
+                        }
+                    }, //右线色
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: "rgba(255,255,255,0.2)"
+                        }
+                    }, //x轴线
+                },
+            ],
+            "grid": {
+                "top": "10%",
+                "right": "30",
+                "bottom": "30",
+                "left": "30",
+            },
+            "series": [{
+                    "name": "Victory",
+
+                    "type": "bar",
+                    "data": [17, 19, 23, 20, 21, 29, 25, 31, 26, 30, 33, 33],
+                    "barWidth": "auto",
+                    "itemStyle": {
+                        "normal": {
+                            "color": {
+                                "type": "linear",
+                                "x": 0,
+                                "y": 0,
+                                "x2": 0,
+                                "y2": 1,
+                                "colorStops": [{
+                                        "offset": 0,
+                                        "color": "#67E0E3"
+                                    },
+
+                                    {
+                                        "offset": 1,
+                                        "color": "#67E0E3"
+                                    }
+                                ],
+                                "globalCoord": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Defeat",
+                    "type": "bar",
+                    "data": [
+                        22, 22, 22, 18, 18, 25, 22, 21, 18, 19, 15, 12
+                    ],
+                    "barWidth": "auto",
+
+                    "itemStyle": {
+                        "normal": {
+                            "color": {
+                                "type": "linear",
+                                "x": 0,
+                                "y": 0,
+                                "x2": 0,
+                                "y2": 1,
+                                "colorStops": [{
+                                        "offset": 0,
+                                        "color": "#FFDB5C"
+                                    },
+                                    {
+                                        "offset": 1,
+                                        "color": "#FFDB5C"
+                                    }
+                                ],
+                                "globalCoord": false
+                            }
+                        }
+                    },
+                    "barGap": "0"
+                },
+                {
+                    "name": "胜率",
+                    "type": "line",
+                    "yAxisIndex": 1,
+
+                    "data": [43, 46, 51, 52, 53, 53, 53, 59, 59, 61, 68, 73],
+                    lineStyle: {
+                        normal: {
+                            width: 2
+                        },
+                    },
+                    "itemStyle": {
+                        "normal": {
+                            "color": "#48f593",
+
+                        }
+                    },
+                    "smooth": true
+                }
+            ]
+        };
+
     let currentType ='line';
     const main = ref();
     const props = defineProps({
@@ -256,6 +431,9 @@ let option = {
                         currentOptions = circle_option;
                         currentOptions.series[0].data[0].value = data.total -data.use;
                         currentOptions.series[0].data[1].value = data.use;
+                    } else if (props.ItemInfo.chart_type == 'interval') {
+                        currentOptions= bar_option;
+                        currentOptions.series[0].data = data;
                     }
                     myChart.setOption(currentOptions);  
                 })
@@ -271,6 +449,9 @@ let option = {
             erd.listenTo(main.value, function () {
                 myChart.resize();
             })
+            erd.listenTo(props.ItemInfo.styles, function () {
+                myChart.resize();
+            })
         })
         $forceUpdate();
     })
@@ -283,6 +464,8 @@ let option = {
                 currentOptions = option;
             } else if(currentType == 'circle'){
                 currentOptions = circle_option;
+            } else if (currentType == 'interval') {
+                currentOptions = bar_option;
             }
             if(currentType == 'line') {
                 currentOptions.series = [{
@@ -320,7 +503,7 @@ let option = {
                 data: [ ["2021-01-04 08:14:36", 80],["2021-01-04 08:14:46", 96],["2021-01-04 08:20:46", 93],["2021-01-04 08:22:46", 90] ]
             }
             ]
-            } else {
+            } else if(currentType == 'line'){
                 currentOptions.series = [{
 
                 type: 'pie',
@@ -367,6 +550,9 @@ let option = {
                     },
                 }]
                 }]
+            } else if(currentType == 'interval') {
+                currentOptions = bar_option;
+                currentOptions.series[0].data = [60, 80, 22, 18, 18, 25, 60, 21, 18, 90, 15, 50];
             }
 
         } else if (e.type == 'type_change') {
@@ -375,6 +561,8 @@ let option = {
                 currentOptions = option;
             } else if(currentType == 'circle'){
                 currentOptions = circle_option;
+            } else if(currentType == 'interval'){
+                currentOptions = bar_option;
             }
         }
 
@@ -387,7 +575,7 @@ let option = {
 </script>
 
 <template>
-    <div ref="main" :style="ItemInfo.styles" style=" width: 100%;" id="main"></div>
+    <div ref="main" :style="ItemInfo.styles" id="main"></div>
 </template>
 
 <style scoped>

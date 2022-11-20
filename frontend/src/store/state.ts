@@ -78,8 +78,11 @@ let comps_sum = [
                     'align-items': 'flex-start',
                     'flex-wrap': 'wrap'
                 },
+                col_widths:{
+                    
+                },
                 cols:[
-                    {idd: '4_col_1',title: '2 Cols', type:'col', span: 6, comps:[]},
+                    {idd: '4_col_1', title: '2 Cols', type:'col', span: 6, comps:[]},
                     {idd: '4_col_2',title: '2 Cols', type:'col', span: 6, comps:[]},
                     {idd: '4_col_3',title: '2 Cols', type:'col', span: 6, comps:[]},
                     {idd: '4_col_4',title: '2 Cols', type:'col', span: 6, comps:[]}
@@ -107,7 +110,21 @@ let comps_sum = [
             },
             {idd: 'template_2',title: 'Tabel', type:'tabel', comp_name: 'LTabel',
                 styles:{
-                }
+                },
+                columns: [
+                    {
+                      title: 'Colum1',
+                      dataIndex: 'name',
+                    },
+                    {
+                      title: 'Age',
+                      dataIndex: 'age',
+                    },
+                    {
+                      title: 'Address',
+                      dataIndex: 'address',
+                    },
+                  ]
             },
             {idd: 'template_3',title: 'Card', type:'card', comp_name: 'LCard',
                 styles:{
@@ -121,7 +138,14 @@ let comps_sum = [
         idd: 'chart', title: 'Charts', type:'chart', children: [
             {idd: 'chart_1',title: 'Chart',chart_type: 'line', type:'echart', comp_name: 'LChart',
                 styles:{
-                    height:'120px'
+                    height:'120px',
+                    width:'180px'
+                }
+            },
+            {idd: 'chart_2',title: 'Map',chart_type: 'map', type:'echart', comp_name: 'LMap',
+                styles:{
+                    height:'120px',
+                    width:'180px'
                 }
             }
         ]

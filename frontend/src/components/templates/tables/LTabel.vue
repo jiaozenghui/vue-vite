@@ -1,16 +1,18 @@
 <template>
-  <a-table :row-selection="rowSelection" :columns="columns" :data-source="data">
+  <div :style="ItemInfo.styles">
+    <a-table   :columns="ItemInfo.columns" :pagination="false" :data-source="ItemInfo.data">
     <template #bodyCell="{ column, text }">
       <template v-if="column.dataIndex === 'name'">
         <a>{{ text }}</a>
       </template>
     </template>
   </a-table>
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, onMounted  } from 'vue';
 import type { TableProps, TableColumnType } from 'ant-design-vue';
-
+import axios from "axios";
 interface DataType {
   key: string;
   name: string;
@@ -18,7 +20,7 @@ interface DataType {
   address: string;
 }
 
-const columns: TableColumnType<DataType>[] = [
+let columns: TableColumnType<DataType>[] = [
   {
     title: 'Name',
     dataIndex: 'name',
@@ -32,51 +34,65 @@ const columns: TableColumnType<DataType>[] = [
     dataIndex: 'address',
   },
 ];
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
-  },
-];
 
 export default defineComponent({
-  setup() {
-    const rowSelection: TableProps['rowSelection'] = {
-      onChange: (selectedRowKeys: string[], selectedRows: DataType[]) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      },
-      getCheckboxProps: (record: DataType) => ({
-        disabled: record.name === 'Disabled User', // Column configuration not to be checked
-        name: record.name,
-      }),
-    };
-
+  props:{
+    ItemInfo: {} as any
+  },
+  setup(props) {
+    onMounted(()=>{
+      if (window.location.href.indexOf('view') >-1) {
+        if (props.ItemInfo.ajaxUrl) {
+          axios.get('./../../'+props.ItemInfo.ajaxUrl).then((res:any) => {
+            let data = res.data.data;
+            props.ItemInfo.data = data;
+          })
+        }
+      }
+    })
+    const changeData = (e:any) => {
+      if (e.type =="data_change") {
+        let data = e.data.data.data;
+        data.forEach((item:any, index:any)=>{
+          item['key']= index;
+        })
+        props.ItemInfo['data'] = data;
+      } else if (e.type =="column_change"){
+        props.ItemInfo.columns = JSON.parse(e.data);
+        columns = JSON.parse(e.data);
+      }
+    }
     return {
-      data,
       columns,
-      rowSelection,
+      changeData
     };
   },
 });
 </script>
+<style lang="less" scoped>
+  :deep(.ant-table) {
+    background: none;
+  }
+  :deep(.ant-table-thead > tr > th) {
+    color: #61d2f7;
+    background: none;
+    font-weight: 600;
+  }
+  :deep(.ant-table-tbody > tr.ant-table-row:hover > td, .ant-table-tbody > tr > td.ant-table-cell-row-hover) {
+    background: none !important;
+  }
+  :deep(.ant-table-tbody > tr > td) {
+      border-bottom: 1px dashed #404040;
+      background: none !important;
+      color: #fff !important;
+  }
+:deep(.ant-table-tbody > tr.ant-table-row:hover) {
+  :deep(td) {
+    background: none !important;
+  }
+  box-shadow: -10px 0px 15px #034c6a inset, 10px 0px 15px #034c6a inset;
+  background: none;
+  cursor: pointer;
+}
+</style>
 

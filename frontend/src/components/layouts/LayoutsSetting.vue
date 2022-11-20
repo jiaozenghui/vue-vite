@@ -6,7 +6,8 @@ import { toRefs } from 'vue'
 import "vue3-colorpicker/style.css";
     const props = defineProps({
         styleItems: {} as any,
-        colStyleItems: {} as any
+        colStyleItems: {} as any,
+        element: {} as any
     })
     const {styleItems, colStyleItems} = toRefs(props);
     const labelCol= { style: { width: '60px' } };
@@ -31,11 +32,23 @@ import "vue3-colorpicker/style.css";
     <a-form-item label="右边距">
       <a-input v-model:value="styleItems['margin-right']" />
     </a-form-item>
-    <a-form-item label="背景色">
-      <color-picker v-model:pureColor="styleItems['background-color']" pickerType="chrome" format="rgb" shape="square"/>
+    <a-form-item label="背景">
+      <a-input v-model:value="styleItems['background']" />
     </a-form-item>
+    <a-form-item label="背景大小">
+      <a-input v-model:value="styleItems['background-size']" />
+    </a-form-item>
+    <a-form-item label="背景位置">
+      <a-input v-model:value="styleItems['background-position']" />
+    </a-form-item>
+<!--     <a-form-item label="背景色">
+      <color-picker v-model:pureColor="styleItems['background-color']" pickerType="chrome" format="rgb" shape="square"/>
+    </a-form-item> -->
     <a-form-item label="水平对齐">
       <a-input v-model:value="colStyleItems['justify-content']" />
+    </a-form-item>
+    <a-form-item v-for="col in element.cols" :label="col.idd">
+      <a-input v-model:value="col.width" />
     </a-form-item>
     <a-form-item label="垂直对齐">
       <a-input v-model:value="colStyleItems['align-items']" />

@@ -10,6 +10,7 @@ import LTabel from "@/components/templates/tables/LTabel.vue";
 import LChart from "@/components/charts/echarts/LChart.vue";
 import LCard from "@/components/templates/cards/LCard.vue";
 import LLabel from "@/components/basics/llabels/LLabel.vue";
+import LMap from "@/components/charts/echarts/LMap.vue";
 import {getCurrentInstance, ComponentInternalInstance } from 'vue';
 const comps= ref({});
 const { proxy }: any = getCurrentInstance();
@@ -43,7 +44,8 @@ const { proxy }: any = getCurrentInstance();
       LTabel:LTabel,
       LChart: LChart,
       LCard:LCard,
-      LLabel:LLabel
+      LLabel:LLabel,
+      LMap:LMap
     })
     let checkConf = ref({}) as any;
     function checkForResize(e:any) {
@@ -74,7 +76,7 @@ const { proxy }: any = getCurrentInstance();
       <a-col
         v-for="col in itemInfo.cols"
         :key="col.idd"
-        :span="col.span"
+        :style="{flex: col.width}"
       >
         <draggable :list="col.comps" :disabled="false"  group="comp" item-key="idd" :style="itemInfo.col_styles"  class="colDraggable">
             <template #item="{element}">
@@ -99,15 +101,17 @@ const { proxy }: any = getCurrentInstance();
 .ant-row {
     height: 100%;
     border: 1px dashed rgb(241, 238, 238);
-
+    flex-flow: inherit;
     :deep(.ant-col) {
         background: transparent;
         border-right: 1px dashed rgb(238, 235, 235);
+        flex: 1;
         &:last-child {
             border-right: none;
         }
         .drag-div {
           width: 100%;
+          padding: 15px;
         }
         .colDraggable {
           height: 100%;

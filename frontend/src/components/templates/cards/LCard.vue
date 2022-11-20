@@ -29,10 +29,16 @@
       
       push('/view/views')
     }
+    const changeData = (e:any) => {
+        
+    }
+    defineExpose({
+        changeData,
+    })
     </script>
     
     <template>
-        <a-card :title="ItemInfo.title" :style="ItemInfo.styles" :bordered="ItemInfo.bordered">
+        <a-card class="border" :title="ItemInfo.title" :style="ItemInfo.styles" :bordered="ItemInfo.bordered">
             <draggable
             class="zone"
             :list="ItemInfo.list"
@@ -69,6 +75,45 @@
                 padding: 0 15px;
                 min-height: 0;
             }
+        }
+        .border {
+            border: 1px solid #0bc4e9 !important;
+            background: rgba(0,72,115,0.28) !important;
+            &:hover{
+                box-shadow:-5px 0px 2px rgba(255,255,255,0.1), 0px 5px 2px rgba(255,255,255,0.1);
+                background: rgba(255,255,255,0.1);
+                &::before{
+                    width: 0%;
+                }
+                &::after{
+                    height: 0%;
+                }
+            }
+            &::before {
+                    content: '';
+                    position: absolute;
+                    width: 80%;
+                    height: calc(100% + 2px);
+                    bottom: -1px;
+                    top: -1px;
+                    left: 10%;
+                    border-bottom: 1px solid #007297;
+                    border-top: 1px solid #007297;
+                    transition: all 0.5s;
+                }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: calc(100% + 2px);
+                    height: 80%;
+                    left: -1px;
+                    right: -1px;
+                    top: 10%;
+                    border-left: 1px solid #007297;
+                    border-right: 1px solid #007297;
+                    transition: all 0.5s;
+                }
+
         }
     </style>
     

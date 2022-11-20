@@ -45,6 +45,7 @@ import axios from "axios";
         >
              <a-select-option value="line">线形图</a-select-option>
             <a-select-option value="circle">饼图</a-select-option>
+            <a-select-option value="interval">横柱图</a-select-option>
         </a-select>
     </a-form-item>
     <a-form-item label="危险">

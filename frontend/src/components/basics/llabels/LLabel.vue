@@ -13,6 +13,6 @@
     </template>
     <style lang="less" scoped>
         label {
-            outline: 1px dashed rgb(191, 210, 220);
+            //outline: 1px dashed rgb(191, 210, 220);
         }
     </style>

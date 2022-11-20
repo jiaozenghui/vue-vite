@@ -1,0 +1,35 @@
+{
+    "data": [
+        {
+            "resource_type": "host",
+            "deploy_type": "docker",
+            "resource_name": "k3sserver-1",
+            "enabled": true,
+            "timestamp": "2022-09-22T08:51:47Z",
+            "detection_type": "application",
+            "datacenter_name": "mec",
+            "status": true
+        },
+        {
+            "resource_type": "host",
+            "deploy_type": "system",
+            "resource_name": "k3sserver-1",
+            "enabled": true,
+            "timestamp": "2022-09-22T08:49:23Z",
+            "detection_type": "application",
+            "datacenter_name": "mec",
+            "status": true
+        },
+        {
+            "resource_type": "container",
+            "deploy_type": "Deployment",
+            "resource_name": "app-manager",
+            "enabled": true,
+            "timestamp": "2022-09-14T08:56:46Z",
+            "detection_type": "application",
+            "datacenter_name": "mec",
+            "status": true
+        }
+
+    ]
+}

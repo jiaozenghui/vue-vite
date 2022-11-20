@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import draggable from "vuedraggable";
 import { useRouter } from 'vue-router';
 import Layouts from "@/components/layouts/Layouts.vue"
-import ldrawers from "@/shared/ldrawers/ldrawers.vue"
 import {getCurrentInstance } from 'vue';
 import { func } from 'vue-types';
  const { proxy }: any = getCurrentInstance();

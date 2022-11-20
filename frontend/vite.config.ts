@@ -26,7 +26,9 @@ export default defineConfig({
   },
   server:{
     proxy:{
-      '/api': 'https://api.*.com/'
+      '/api': 'https://api.*.com/',
+      '/wecmdb/api/v1': 'http://119.91.78.168:8090/',
+      '/wecmdb/fonts': 'http://119.91.78.168:8090/',
     }
   }
 })
