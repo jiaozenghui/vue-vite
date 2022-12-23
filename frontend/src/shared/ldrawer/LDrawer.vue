@@ -12,6 +12,11 @@ import LLabelSetting from '@/components/basics/llabels/LLabelSetting.vue'
 import LChartSetting from '@/components/charts/echarts/LChartSetting.vue'
 import LTabelSetting from '@/components/templates/tables/LTabelSetting.vue'
 import LMapSetting from '@/components/charts/echarts/LMapSetting.vue'
+
+
+import stastic_types_settings from '@/components/widgets/stastic_types/settings.vue'
+import chart_seetings from '@/components/widgets/chart/settings.vue'
+
 import {ColorPicker} from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 const props = defineProps({
@@ -28,7 +33,9 @@ const conf_c:any = {
   LLabel:LLabelSetting,
   LChart:LChartSetting,
   LTabel:LTabelSetting,
-  LMap:LMapSetting
+  LMap:LMapSetting,
+  stastic_type:stastic_types_settings,
+  chart: chart_seetings
 }
 
 const isShow = ref(false)
@@ -70,6 +77,7 @@ function dataChange(res: any) {
           :styleItems="confs.element.styles"
           :colStyleItems="confs.element.col_styles"
           :element="confs.element"
+          @change="dataChange"
       ></component>
     </div>
 </transition>
@@ -80,25 +88,25 @@ function dataChange(res: any) {
   padding:5px 10px;
 
   .fold {
-    position:absolute;
-    left: 2px;
+    position: absolute;
+    left: 1px;
     top: 50%;
-    color: #fff;
+    color: #766767;
     font-size: 30px;
     cursor: pointer;
+    transform: scale(0.8,1.2);
   }
 }
 .slide-fade-enter-active {
-  transition: all .3s ease-out;
+  transition: all .3s ease-in;
 }
 
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(20px);
   opacity: 0;
 }
 </style>

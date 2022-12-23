@@ -1,21 +1,19 @@
 <script lang="ts" setup>
 import { GridLayout, GridItem } from "vue3-grid-layout-next";
-import {getCurrentInstance, ref, onMounted, toRefs } from 'vue';
+import {getCurrentInstance, ref, onMounted } from 'vue';
 import widget from "@/components/widgets/index.vue";
 
 
 
 const { proxy: { $nextTick, $forceUpdate }, }: any = getCurrentInstance();
 const { proxy }: any = getCurrentInstance();
-let props = defineProps({
-    id: {type:String} as any,
-    'page-type': {type:String} as any,
-    layouts: [] as any,
+defineProps({
+    id: {type:String},
+    'page-type': {type:String},
     mode: {
         type: String
-    } as any
-});
-let {layouts} = toRefs(props);
+    }
+})
 const responsive = ref(true);
 const activeKey = ref([]);
 const selectWidgets = ref([
@@ -78,9 +76,9 @@ const selectWidgets = ref([
     {id:'6', type:'chart', title:'外部页面',  wedget: 'out_page'}
 
 ]);
-//const layout = ref([]) as any;
-let draggable= ref(true);
-let resizable= ref(true);
+const layout = ref([]) as any;
+let draggable= ref(false);
+let resizable= ref(false);
 const gridlayout = ref();
 const content = ref();
 let colNum = ref(12);
@@ -97,12 +95,12 @@ const comps= ref({});
 function addItem (item:any) {
 
     // Add a new item. It must have a unique key!
-    layouts.value.push({
-        x: (layouts.value.length * 4) % (colNum.value || 12),
-        y: layouts.value.length + (colNum.value || 12), // puts it at the bottom
+    layout.value.push({
+        x: (layout.value.length * 4) % (colNum.value || 12),
+        y: layout.value.length + (colNum.value || 12), // puts it at the bottom
         w: 4,
         h: 8,
-        i: layouts.value.length.toString(),
+        i: index.toString(),
         wedget:{
             type: item.type,
             id: item.type+index.toString(),
@@ -117,8 +115,8 @@ function addItem (item:any) {
     index++;
 }
 function removeItem (val:any) {
-    const index = layouts.value.map((item:any) => item.i).indexOf(val);
-    layouts.value.splice(index, 1);
+    const index = layout.value.map((item:any) => item.i).indexOf(val);
+    layout.value.splice(index, 1);
 }
 
 onMounted(()=>{       
@@ -140,14 +138,14 @@ function dragend (e:any, item:any) {
     if (mouseInGrid === true) {
         console.log('in')
         //alert(`Dropped element props:\n${JSON.stringify(DragPos, ['x', 'y', 'w', 'h'], 2)}`);
-        //gridlayouts.value.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
-        //layouts.value = layouts.value.filter((obj:any) => obj.i !== 'drop');
+        //gridlayout.value.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
+        //layout.value = layout.value.filter((obj:any) => obj.i !== 'drop');
         // UNCOMMENT below if you want to add a grid-item
 
         addItem(item);
-        //gridlayouts.value.dragEvent('dragend', DragPos.i, DragPos.x,DragPos.y,200,200);
+        //gridlayout.value.dragEvent('dragend', DragPos.i, DragPos.x,DragPos.y,200,200);
         try {
-            //gridlayouts.value.$children[layouts.value.length].$refs.item.style.display="block";
+            //gridlayout.value.$children[layout.value.length].$refs.item.style.display="block";
         } catch {
         }
     }
@@ -172,7 +170,7 @@ function layClick(e:any, element:any) {
 
 <template>
     <div class="edit-zone">
-        <div v-if="mode== 'edit'" class="select-zone">
+        <div class="select-zone">
             <a-collapse v-model:activeKey="activeKey" accordion>
                 <a-collapse-panel v-for="wedget in selectWidgets" :key="wedget.id" :header="wedget.title" >
                     <a-collapse-panel  @dragend="dragend($event, item)" class="droppable-element" draggable="true"
@@ -185,7 +183,7 @@ function layClick(e:any, element:any) {
         <div ref="content" class="draw-zone">
             <GridLayout
                 ref="gridlayout"
-                v-model:layout="layouts"
+                v-model:layout="layout"
                 :col-num="colNum"
                 :row-height="30"
                 :is-draggable="draggable"
@@ -193,7 +191,7 @@ function layClick(e:any, element:any) {
                 :vertical-compact="true"
                 :use-css-transforms="true" :responsive="responsive"
             >
-            <grid-item  v-for="item in layouts"
+            <grid-item  v-for="item in layout"
                             :ref="item.i"
                             :static="false"
                             :x="item.x"
@@ -212,7 +210,6 @@ function layClick(e:any, element:any) {
             </GridLayout>
         
         </div>
-        <div id="set-container" class="conf-zone"></div>
 
     </div>
 

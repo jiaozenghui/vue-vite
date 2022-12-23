@@ -58,7 +58,6 @@
 
 
     onMounted(()=>{
-        debugger
       init();  
       $nextTick(()=>{
       })

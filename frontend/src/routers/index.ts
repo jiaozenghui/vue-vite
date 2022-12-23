@@ -15,6 +15,7 @@ import editorview from './editorview/index.vue'
 import pageEditor from './page-editor/pageEditor.vue'
 
 import ownDashboard from './dashboards/own-dashboard.vue'
+import linkDiagram from './link-diagram/index.vue'
 
 
 
@@ -35,6 +36,10 @@ export const router = createRouter({
     {
       path: '/dashboard-own',
       component: ownDashboard,
+    },
+    {
+      path: '/link-diagram',
+      component: linkDiagram,
     },
     {
       path: '/edit',

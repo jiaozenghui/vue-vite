@@ -1,35 +1,29 @@
 <script setup lang="ts">
     import {getCurrentInstance, ref } from 'vue';
     import Layouts from "@/components/layouts/Layouts.vue"
-    import PageLayout from "@/components/PageLayout/index.vue";
-    import { message } from 'ant-design-vue';
-    import pageService from '@/api/pageService'
+    import PageLayout from "@/components/PageLayout/index.vue"
     const { proxy }: any = getCurrentInstance();
 
     let visible = ref(false);
-
-    let selectValue = ref('');
 
     const formState:any = ref({
       name: ''
     });
 
     let curPageLayout = ref({} as any);
-
-    let list = ref() as any; 
-    getPages();
+    let pageList = window.localStorage.getItem('pages')? JSON.parse(window.localStorage.getItem('pages') as any): [];
+     const list = ref(pageList) as any; 
+     if (list.value.length >0) {
+      curPageLayout.value = list.value[0];
+      }
      const curPage = ref('0');
      const pageLayoutType = ref('edit');
 
      const pageLayouts:any =ref([]);
 
     const handleChange = (value: string) => {
-      selectValue.value = value;
-      let pages = list.value.filter((item:any)=> {
-        return item.id == value
-      });
-      curPageLayout.value = pages[0];
-
+      curPageLayout.value = list.value.filter((item:any)=> item.id == value)[0];
+      //pageLayouts.value = list
     };
     const handleBlur = () => {
       console.log('blur');
@@ -57,59 +51,23 @@
         }
       });
       window.localStorage.setItem('pages', JSON.stringify(pages));
-      let params = JSON.parse(JSON.stringify(curPageLayout.value));
-      delete params.id; 
-      pageService.updateGraph(curPageLayout.value.id, params).then((res:any)=>{
-          let resData = res.data;
-          if (resData.Result) {
-            message.success('保存成功');           
-          }
-        });
-
     }
     function addPage() {
       let pages:any = window.localStorage.getItem('pages')? JSON.parse(window.localStorage.getItem('pages') as any): [];
       let newItem = {
-          kind: 'statistic',
-          properties:{
-            name: formState.value.name,
-            layouts: []
-          }
-        };
-
-
-      pageService.addGraph(newItem).then((res:any)=>{
-        let resData = res.data;
-        if (resData.Result) {
-          let item = {
-            id: resData.Data.id,
-            ...newItem
-          }
-          list.value.push(item);
-          curPageLayout.value = item;
-          selectValue.value = resData.Data.id;
-          visible.value = false;
-        }
-      });
-
-
+        name: formState.value.name,
+        type: 'stastic',
+        id: pages.length.toString(),
+        layouts: []
+      };
+      pages.push(newItem);
+      window.localStorage.setItem('pages', JSON.stringify(pages));
+      curPageLayout.value = newItem;
+      list.value = pages;
+      visible.value = false;
     }
 
-    function getPages() {
-      pageService.getGraphs({kind: 'statistic'}).then((res:any)=>{
-          let data = res.data;
-          if (data.Result) {
-            let resData = data.Data;
-            list.value = resData.graphs;
 
-          }
-        }).finally(()=>{
-          if (list.value.length >0) {
-              curPageLayout.value = list.value[0];
-              selectValue.value = list.value[0].id;
-            }
-        });
-    }
     </script>
     
     <template>
@@ -117,7 +75,7 @@
             <div class="sitch-page">
               <div>
                 <a-select
-                    v-model:value="selectValue"
+                    v-model:value="curPageLayout.id"
                     show-search
                     placeholder="Select a person"
                     style="width: 200px"
@@ -126,7 +84,7 @@
                     @blur="handleBlur"
                     @change="handleChange"
                 >
-                <a-select-option v-for="item in list"  :value="item.id">{{item.properties.name}}</a-select-option>
+                <a-select-option v-for="item in list"  :value="item.id">{{item.name}}</a-select-option>
               </a-select>
                 <a-button @click="changeMode()" class="view-layout-edit" size="samll" >
                     {{mode=='view'? '编辑': '浏览'}}
@@ -149,7 +107,7 @@
 
             </div>
             <div class="page-layout">
-                <page-layout :mode="mode" :layouts="curPageLayout.properties.layouts" v-if="curPageLayout.id" :page-type="pageLayoutType" :id="curPageLayout.id"></page-layout>
+                <page-layout :mode="mode" :layouts="curPageLayout.layouts" v-if="curPageLayout.id" :page-type="pageLayoutType" :id="curPageLayout.id"></page-layout>
             </div>
         </div>
 
